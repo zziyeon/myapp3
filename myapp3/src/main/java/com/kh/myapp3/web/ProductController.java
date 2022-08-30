@@ -1,5 +1,9 @@
-package com.kh.myapp3;
+package com.kh.myapp3.web;
 
+import com.kh.myapp3.domain.Product;
+import com.kh.myapp3.domain.svc.ProductSVC;
+import com.kh.myapp3.web.form.SaveForm;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,7 +12,10 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @Controller
 @RequestMapping("/product")
+@RequiredArgsConstructor
 public class ProductController {
+
+    private final ProductSVC productSVC;
 
     //등록 양식
     @GetMapping
@@ -19,8 +26,17 @@ public class ProductController {
 
     //등록 처리
     @PostMapping
-    public String saver(){
-        return "redirect:/product/1";      //상세 view
+    public String save(SaveForm saveForm){
+        log.info("saveForm:{}", saveForm);
+
+        Product product = new Product();
+        product.setPname(saveForm.getPname());
+        product.setQuantity(saveForm.getQuantity());
+        product.setPrice(saveForm.getPrice());
+
+        Integer productId = productSVC.save(product);
+
+        return "redirect:/product/"+productId;      //상세 view
     }
 
     //상품 개별 조회
@@ -40,6 +56,19 @@ public class ProductController {
     public String update(@PathVariable("pid") String pid){
 
         return "redifrect:/product/1";      //상품 상세 view
+    }
+
+    //삭제 처리
+    @GetMapping("/{pid}/del")
+    public String delete(){
+        return "redirect:/product/all";         //전체 목록 view
+    }
+
+    // 목록 화면
+    @GetMapping("/all")
+    public String list(){
+
+        return "product/all";               //전체 목록 view
     }
 
 }
