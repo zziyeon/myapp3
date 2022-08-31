@@ -4,6 +4,8 @@ import com.kh.myapp3.domain.Product;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -89,7 +91,13 @@ public class ProductDAOImpl implements ProductDAO {
         sql.append("from product ");
         sql.append("where product_id= ? ");
 
-        Product product = jt.queryForObject(sql.toString(), Product.class, productId);     //queryForObject: 메소드 하나
+        Product product = null;     //queryForObject: 메소드 하나
+        try {
+            product = jt.queryForObject(
+                    sql.toString(), new BeanPropertyRowMapper<>(Product.class) , productId);
+        } catch (EmptyResultDataAccessException e) {
+            log.info("삭제대상 상품이 없습니다 상품아이디={}", productId);
+        }
         return product;
     }
 
@@ -124,7 +132,7 @@ public class ProductDAOImpl implements ProductDAO {
         sql.append("    from product ");
 
         //case1) 자동 매핑 sql결과 레코드와 bean(컨테이너가 관리하는 자바 객체) 동일한 구조의 자바 객체가 존재할 경우
-        List<Product> result =jt.query(sql.toString(), new BeanPropertyRowMapper<Product>());              //결과가 여러개 나올 때 query 사용
+        List<Product> result =jt.query(sql.toString(), new BeanPropertyRowMapper<>(Product.class));              //결과가 여러개 나올 때 query 사용
 
         //case2) 수동 매핑 sql결과 레코드와 컬럼명과 java 객체의 멤버이름이 다른경우 or 타입이 다른 경우
 //        List<Product> result =
