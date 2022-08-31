@@ -36,4 +36,15 @@ public interface ProductDAO {
      * @return      상품전체
      */
     List<Product> findAll();
+
+    /**
+     * 전체 삭제
+     */
+    void deleteAll();
+
+
+    /**
+     * 상품아이디 생성
+     */
+    Long generatePid();
 }

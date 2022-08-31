@@ -3,20 +3,16 @@ package com.kh.myapp3.domain.dao;
 import com.kh.myapp3.domain.Product;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Bean;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -72,7 +68,6 @@ public class ProductDAOImpl implements ProductDAO {
                 pstmt.setString(1, product.getPname());
                 pstmt.setInt(2, product.getQuantity());
                 pstmt.setInt(3, product.getPrice());
-
                 return pstmt;
             }
         },keyHolder);
@@ -148,6 +143,23 @@ public class ProductDAOImpl implements ProductDAO {
 //            }
 //        });
        return result;
+    }
+
+    //전체 삭제
+    @Override
+    public void deleteAll() {
+        String sql = "delete from product";
+        int rows = jt.update(sql);
+        log.info("삭제 건수: {}", rows);
+    }
+
+    //상품 아이디 생성
+    @Override
+    public Long generatePid() {
+        String sql = "select product_product_id_seq.nextval from dual ";
+        Long newProductId = jt.queryForObject(sql, Long.class);
+        return newProductId;
+
     }
 
     //등록    방법3) 화살표 함수 사용
