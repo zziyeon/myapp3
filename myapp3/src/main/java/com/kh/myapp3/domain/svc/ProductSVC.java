@@ -7,7 +7,7 @@ public interface ProductSVC {
     /**
      * 삼풍등록
      * @param product   상품정보
-     * @return  상품ID
+     * @return  등록된 상품 정보
      */
-    Integer save(Product product);
+    Product save(Product product);
 }

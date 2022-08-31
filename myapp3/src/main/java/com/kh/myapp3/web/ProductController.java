@@ -11,21 +11,21 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @Controller
-@RequestMapping("/product")
+@RequestMapping("/products")
 @RequiredArgsConstructor
 public class ProductController {
 
     private final ProductSVC productSVC;
 
     //등록 양식
-    @GetMapping
-    public String saveForm(){
+    @GetMapping("/add")
+    public String addForm(){
 
-        return "product/saveForm";          //상품 등록 view
+        return "product/addForm";          //상품 등록 view
     }
 
     //등록 처리
-    @PostMapping
+    @PostMapping("/add")
     public String save(SaveForm saveForm){
         log.info("saveForm:{}", saveForm);
 
@@ -34,38 +34,46 @@ public class ProductController {
         product.setQuantity(saveForm.getQuantity());
         product.setPrice(saveForm.getPrice());
 
-        Integer productId = productSVC.save(product);
+        Product savedProduct = productSVC.save(product);
 
-        return "redirect:/product/"+productId;      //상세 view
+
+        return "redirect:/products/"+savedProduct.getProductId();      //요청 url
     }
 
     //상품 개별 조회
     @GetMapping("/{pid}")
-    public String findByProductId(@PathVariable("pid") String pid){
+    public String findByProductId(
+            @PathVariable("pid") String pid,
+            Model model
+    ){
         //db에서 상품조회
-        return "product/detailForm";        //상세 view
+
+        Product product = new Product();
+        model.addAttribute("product",product);
+        return "product/itemForm";        //상세 view
     }
 
     //수정 양식
     @GetMapping("/{pid}/edit")
-    public String updateForm(){
-        return "product/updateForm";        //상품 수정 view
+    public String editForm(){
+        return "product/editForm";        //상품 수정 view
     }
+
     //수정 처리
     @PostMapping("/{pid}/edit")
     public String update(@PathVariable("pid") String pid){
 
-        return "redifrect:/product/1";      //상품 상세 view
+        return "redifrect:/products/1";      //상품 상세 url
     }
 
     //삭제 처리
     @GetMapping("/{pid}/del")
     public String delete(){
-        return "redirect:/product/all";         //전체 목록 view
+        return "redirect:/products";         //삭제 후 전체 목록 url
     }
 
     // 목록 화면
-    @GetMapping("/all")
+    @GetMapping
     public String list(){
 
         return "product/all";               //전체 목록 view

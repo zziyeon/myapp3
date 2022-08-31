@@ -18,7 +18,7 @@ public class ProductSVCImpl implements ProductSVC{
 
     //등록
     @Override
-    public Integer save(Product product) {
+    public Product save(Product product) {
         return productDAO.save(product);
     }
 }
