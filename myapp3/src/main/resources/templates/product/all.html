@@ -21,29 +21,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th>1</th>
-                    <th><a href="/products/1">컴퓨터</a></th>
-                    <th>10</th>
-                    <th>1000000</th>
-                </tr>
-                <tr>
-                    <th>2</th>
-                    <th><a href="/products/1">모니터</a></th>
-                    <th>5</th>
-                    <th>200000</th>
-                </tr>
-                <tr>
-                    <th>3</th>
-                    <th><a href="/products/1">마우스</a></th>
-                    <th>8</th>
-                    <th>16000</th>
-                </tr>
-                <tr>
-                    <th>89</th>
-                    <th><a href="/products/89">선풍기</a></th>
-                    <th>6</th>
-                    <th>60000</th>
+                <tr th:each="product : ${list}">
+                    <td th:text="${product.productId}">1</td>
+                    <td ><a href="/products/1" th:href="@{/products/{pid}(pid=${product.productId}, name=${product.pname})}" th:text="${product.pname}">컴퓨터</a></td>
+                    <td th:text="${product.quantity}">10</td>
+                    <td th:text="${product.price}">1000000</td>
                 </tr>
             </tbody>
         </table>

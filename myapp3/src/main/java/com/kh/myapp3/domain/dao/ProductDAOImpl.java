@@ -86,9 +86,9 @@ public class ProductDAOImpl implements ProductDAO {
         sql.append("from product ");
         sql.append("where product_id= ? ");
 
-        Product product = null;     //queryForObject: 메소드 하나
+        Product product = null;
         try {
-            product = jt.queryForObject(
+            product = jt.queryForObject(    //queryForObject: 메소드 하나(단일 레코드)
                     sql.toString(), new BeanPropertyRowMapper<>(Product.class) , productId);
         } catch (EmptyResultDataAccessException e) {
             log.info("삭제대상 상품이 없습니다 상품아이디={}", productId);
@@ -107,7 +107,6 @@ public class ProductDAOImpl implements ProductDAO {
         sql.append("        price = ? ");
         sql.append("where product_id = ? ");
 
-
         jt.update(sql.toString(), product.getPname(), product.getQuantity(),product.getPrice(), productId );
     }
 
@@ -125,6 +124,7 @@ public class ProductDAOImpl implements ProductDAO {
 
         sql.append("select product_id, pname, quantity, price ");
         sql.append("    from product ");
+        sql.append("    order by product_id asc ");
 
         //case1) 자동 매핑 sql결과 레코드와 bean(컨테이너가 관리하는 자바 객체) 동일한 구조의 자바 객체가 존재할 경우
         List<Product> result =jt.query(sql.toString(), new BeanPropertyRowMapper<>(Product.class));              //결과가 여러개 나올 때 query 사용
