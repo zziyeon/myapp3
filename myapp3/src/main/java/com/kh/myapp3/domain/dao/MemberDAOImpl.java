@@ -43,7 +43,7 @@ public class MemberDAOImpl implements MemberDAO {
         sql.append("VALUES (?, ?, ?, ?) ");
 
 //        Long memberId = generateMemberId();
-        jt.update(sql.toString(), member.getMember_id(), member.getEmail(), member.getPw(), member.getNickname());
+        jt.update(sql.toString(), member.getMemberId(), member.getEmail(), member.getPw(), member.getNickname());
 
         return result;
     }
@@ -61,6 +61,7 @@ public class MemberDAOImpl implements MemberDAO {
 
         Member findedMember = null;
         try {
+            //BeanPropertyRowMapper는 매ㅠㅣㅇ되는 자바클래스에 디폴트생성자 필수
             findedMember = jt.queryForObject(sql.toString(), new BeanPropertyRowMapper<>(Member.class), memberId);
         } catch (DataAccessException e) {
             log.info("찾고자하는 회원이 없습니다.=>{}", memberId);

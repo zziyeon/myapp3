@@ -19,7 +19,7 @@ public class MemberSVCImpl implements MemberSVC{
     public Member insert(Member member) {
         //회원아이디 생성
         Long generateMemberId = memberDAO.generateMemberId();
-        member.setMember_id(generateMemberId);
+        member.setMemberId(generateMemberId);
         memberDAO.insert(member);
         return memberDAO.findById(generateMemberId);
     }
