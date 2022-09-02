@@ -8,6 +8,8 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
@@ -22,7 +24,7 @@ class MemberSVCImplTest {
     @DisplayName("가입")
     @Order(1)
     void insert() {
-        member = new Member("test1@test.com", "1234", "요리조리");
+        member = new Member("test71@test.com", "1234", "요리조리");
 
         Member insertedMember = memberSVC.insert(member);
         Assertions.assertThat(insertedMember.getEmail()).isEqualTo(member.getEmail());
@@ -62,6 +64,9 @@ class MemberSVCImplTest {
     @DisplayName("삭제")
     @Order(5)
     void del() {
+        memberSVC.del(member.getMemberId());
+        Member findedMember = memberSVC.findById(member.getMemberId());
+        Assertions.assertThat(findedMember).isNull();;
 
     }
 
@@ -69,6 +74,8 @@ class MemberSVCImplTest {
     @DisplayName("목록")
     @Order(4)
     void all() {
-
+        List<Member> list = memberSVC.all();
+        Member findedMember = memberSVC.findById(member.getMemberId());
+        Assertions.assertThat(list).containsAnyOf(findedMember);
     }
 }

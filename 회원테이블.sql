@@ -34,7 +34,7 @@ select member_id, email, pw, nickname, cdate, udate from member where member_id=
 commit;
 
 -- 객체 삭제
-delete from member where email='gildong@naver.com';
+delete from member where member_id=2;
 
 -- 회원 번호 생성
 select member_member_id_seq.nextval from dual;

@@ -33,7 +33,7 @@ public class MemberController {
 
         Member addedMember = memberSVC.insert(member);
 
-        return "redirect:/members/"+addedMember.getMember_id();
+        return "redirect:/members/"+addedMember.getMemberId();
     }
 
 }

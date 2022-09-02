@@ -75,9 +75,9 @@ public class MemberDAOImpl implements MemberDAO {
         StringBuffer sql = new StringBuffer();
         sql.append("update member ");
         sql.append("set pw=?, nickname=?, udate = systimestamp ");
-        sql.append("where memberId = ? ");
+        sql.append("where member_id = ? ");
 
-        result = jt.update(sql.toString(), member.getPw(), member.getEmail(), memberId);
+        result = jt.update(sql.toString(), member.getPw(), member.getNickname(), memberId);
         return result;
     }
 
