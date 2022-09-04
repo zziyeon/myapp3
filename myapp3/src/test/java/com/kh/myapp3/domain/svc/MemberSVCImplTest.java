@@ -1,7 +1,6 @@
 package com.kh.myapp3.domain.svc;
 
 import com.kh.myapp3.domain.Member;
-import com.kh.myapp3.domain.Product;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
@@ -9,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @SpringBootTest
@@ -24,12 +21,12 @@ class MemberSVCImplTest {
     @DisplayName("가입")
     @Order(1)
     void insert() {
-        member = new Member("test71@test.com", "1234", "요리조리");
+        Member newMember = new Member("test71@test.com", "1234", "요리조리");
 
-        Member insertedMember = memberSVC.insert(member);
-        Assertions.assertThat(insertedMember.getEmail()).isEqualTo(member.getEmail());
-        Assertions.assertThat(insertedMember.getPw()).isEqualTo(member.getPw());
-        Assertions.assertThat(insertedMember.getNickname()).isEqualTo(member.getNickname());
+        member = memberSVC.insert(newMember);
+        Assertions.assertThat(member.getEmail()).isEqualTo(newMember.getEmail());
+        Assertions.assertThat(member.getPw()).isEqualTo(newMember.getPw());
+        Assertions.assertThat(member.getNickname()).isEqualTo(newMember.getNickname());
     }
 
     @Test
