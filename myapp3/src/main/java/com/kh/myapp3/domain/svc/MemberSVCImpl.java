@@ -30,13 +30,16 @@ public class MemberSVCImpl implements MemberSVC{
     }
 
     // 회원 수정
-    public void update(Long memberId, Member member) {
-        memberDAO.update(memberId, member);
+    public int update(Long memberId, Member member) {
+        int cnt = memberDAO.update(memberId, member);
+        return cnt;
     }
 
     // 회원 탈퇴
-    public void del(Long memberId) {
-        memberDAO.del(memberId);
+    public int del(Long memberId, String pw) {
+        int cnt =    memberDAO.del(memberId, pw);
+        log.info("삭제건수{}", cnt);
+        return cnt;
     }
 
     // 회원 목록

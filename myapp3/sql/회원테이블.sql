@@ -1,4 +1,4 @@
-drop table memer;
+drop table member;
 
 create table member (
     member_id number(8,0)
@@ -9,34 +9,34 @@ create table member (
     ,udate timestamp default systimestamp not null
 );
 
---±âº»Å° ¼³Á¤
+--ï¿½âº»Å° ï¿½ï¿½ï¿½ï¿½
 ALTER TABLE member ADD CONSTRAINT member_member_id_pk PRIMARY key(member_id);
 
--- À¯´ÏÅ© Å° ¼³Á¤
+-- ï¿½ï¿½ï¿½ï¿½Å© Å° ï¿½ï¿½ï¿½ï¿½
 ALTER TABLE member ADD CONSTRAINT member_email_uk UNIQUE(email);
 
---¿Ü·¡Å° ¼³Á¤
+--ï¿½Ü·ï¿½Å° ï¿½ï¿½ï¿½ï¿½
 --ALTER TABLE member ADD CONSTRAINT member_p_o_num_fk FOREIGN key(OWNER_NUMBER) REFERENCES member(mem_number)on delete cascade;
 
---½ÃÄö½ºÅ°
+--ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å°
 DROP SEQUENCE MEMBER_MEMBER_ID_SEQ;
 CREATE SEQUENCE MEMBER_MEMBER_ID_SEQ;
 
---°´Ã¼ »ý¼º
-INSERT INTO MEMBER (member_id, email, pw, nickname) VALUES (MEMBER_MEMBER_ID_SEQ.nextval, 'gildong@naver.com', 'asdf1234', '¿ä¸®Á¶¸®');
+--ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
+INSERT INTO MEMBER (member_id, email, pw, nickname) VALUES (MEMBER_MEMBER_ID_SEQ.nextval, 'gildong@naver.com', 'asdf1234', 'ï¿½ä¸®ï¿½ï¿½ï¿½ï¿½');
 
---°´Ã¼ ¼öÁ¤
-update member set pw='abcd1234', nickname='Á¶¸®¿ä¸®', udate = systimestamp where member_id = 2;
+--ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
+update member set pw='abcd1234', nickname='ï¿½ï¿½ï¿½ï¿½ï¿½ä¸®', udate = systimestamp where member_id = 2;
 
--- °´Ã¼ Á¶È¸
+-- ï¿½ï¿½Ã¼ ï¿½ï¿½È¸
 select member_id, email, pw, nickname, cdate, udate from member where member_id=2;
 
 commit;
 
--- °´Ã¼ »èÁ¦
+-- ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
 delete from member where member_id=2;
 
--- È¸¿ø ¹øÈ£ »ý¼º
+-- È¸ï¿½ï¿½ ï¿½ï¿½È£ ï¿½ï¿½ï¿½ï¿½
 select member_member_id_seq.nextval from dual;
 select member_member_id_seq.currval from dual;
 

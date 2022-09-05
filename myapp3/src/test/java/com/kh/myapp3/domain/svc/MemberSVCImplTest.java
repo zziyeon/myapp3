@@ -21,7 +21,7 @@ class MemberSVCImplTest {
     @DisplayName("가입")
     @Order(1)
     void insert() {
-        Member newMember = new Member("test71@test.com", "1234", "요리조리");
+        Member newMember = new Member("test99@test.com", "1234", "요리조리");
 
         member = memberSVC.insert(newMember);
         Assertions.assertThat(member.getEmail()).isEqualTo(newMember.getEmail());
@@ -58,10 +58,10 @@ class MemberSVCImplTest {
     }
 
     @Test
-    @DisplayName("삭제")
+    @DisplayName("탈퇴")
     @Order(5)
     void del() {
-        memberSVC.del(member.getMemberId());
+        memberSVC.del(member.getMemberId(), member.getPw());
         Member findedMember = memberSVC.findById(member.getMemberId());
         Assertions.assertThat(findedMember).isNull();;
 

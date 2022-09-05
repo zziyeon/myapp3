@@ -25,14 +25,16 @@ public interface MemberSVC {
      * @param member 수정정보     *
      * @return 수정건수
      */
-    void update(Long memberId, Member member);
+    int update(Long memberId, Member member);
 
     /**
      * 탈퇴
      * @param memberId 아이디
+     * @param pw 비밀멎ㄴ호
      * @return 삭제건수
      */
-    void del(Long memberId);
+    int del(Long memberId, String pw);
+
 
     /**
      * 목록

@@ -13,9 +13,8 @@
         <hr>
         <form action="" method="post">
             <div>
-<!--                <div><label for="member_id">회원번호</label></div>-->
                 <div><label for="">이메일</label><input type="email" name="email"></div>
-                <div><label for="">비밀번호</label><input type="password" name="password"></div>
+                <div><label for="">비밀번호</label><input type="password" name="pw"></div>
                 <div><label for="">닉네임</label><input type="text" name="nickname"></div>
                 <div><button type="submit">등록</button><button type="button" id="cancelBtn">취소</button></div>
             </div>
@@ -23,7 +22,7 @@
     </div>
 <script>
     cancelBtn.addEventListener('click', e=>{
-        location.href = '/members';
+            location.href = '/members';
     });
 </script>
 </body>

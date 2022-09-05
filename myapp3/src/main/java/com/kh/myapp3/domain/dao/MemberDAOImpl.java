@@ -69,24 +69,33 @@ public class MemberDAOImpl implements MemberDAO {
         return findedMember;
     }
 
+    /**
+     * 수정
+     * @param memberId 회원아이디
+     * @param member 수정정보     *
+     * @return
+     */
     @Override
     public int update(Long memberId, Member member) {
         int result = 0;
         StringBuffer sql = new StringBuffer();
         sql.append("update member ");
-        sql.append("set pw=?, nickname=?, udate = systimestamp ");
+        sql.append("set nickname=?, udate = systimestamp ");
         sql.append("where member_id = ? ");
+        sql.append("    pw = ? ");
 
-        result = jt.update(sql.toString(), member.getPw(), member.getNickname(), memberId);
+        result = jt.update(sql.toString(), member.getNickname(), memberId, member.getPw());
         return result;
     }
 
-    @Override
-    public int del(Long memberId) {
-        int result = 0;
-        String sql = "delete from member where member_id=? ";
 
-        result = jt.update(sql, memberId);
+
+    @Override
+    public int del(Long memberId, String pw) {
+        int result = 0;
+        String sql = "delete from member where member_id=? and pw= ? ";
+
+        result = jt.update(sql, memberId, pw);
         return result;
     }
 
