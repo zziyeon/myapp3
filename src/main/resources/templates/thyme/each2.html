@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>일반 for문</title>
+</head>
+<body>
+    <th:block th:each="count, countStat : ${#numbers.sequence(1,10)}">
+        <p>Hello
+            <span th:text="${countStat.index}">Hello</span>
+            <span th:text="${countStat.count}">Hello</span>
+            <span th:text="${countStat.first}">Hello</span>
+            <span th:text="${countStat.last}">Hello</span>
+            <span th:text="${countStat.current}">Hello</span>
+            <span th:text="${countStat.odd}">Hello</span>
+            <span th:text="${countStat.even}">Hello</span>
+        </p>
+    </th:block>
+</body>
+</html>
