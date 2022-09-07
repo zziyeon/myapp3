@@ -25,21 +25,21 @@
         </div>
     </form>
     <script>
-        (()=>{      <!-- IIFE  -->
+        (()=>{      //<!-- IIFE  -->
             const id = document.querySelector('input[name=memberId]').value;
 
-            <!-- 목록 -->
+            //<!-- 목록 -->
             listBtn.addEventListener('click', e=>{
                 location.href = '/members';
             });
 
-            <!-- 수정 -->
+            //<!-- 수정 -->
             editBtn.addEventListener('click', e=>{
                 const url = `/members/${id}/edit`;
                 location.href = url;
             });
 
-            <!-- 삭제 -->
+            //<!-- 삭제 -->
             delBtn.addEventListener('click', e=>{
                 if(!confirm('삭제하시겠습니까?')) return;
 

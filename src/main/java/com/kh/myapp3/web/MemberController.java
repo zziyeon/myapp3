@@ -116,15 +116,4 @@ public class MemberController {
         }
         return "redirect:/";         //삭제 후 전체 목록 url
     }
-
-    // 목록 화면
-    @GetMapping("")
-    public String list(Model model) {
-        log.info("Model:{}", model);
-
-        List<Member> list = memberSVC.all();
-        model.addAttribute("list", list);
-
-        return "member/all";               //전체 목록 view
-    }
 }

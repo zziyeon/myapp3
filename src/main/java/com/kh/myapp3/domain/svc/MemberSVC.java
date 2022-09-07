@@ -34,11 +34,4 @@ public interface MemberSVC {
      * @return 삭제건수
      */
     int del(Long memberId, String pw);
-
-
-    /**
-     * 목록
-     * @return 회원전체
-     */
-    List<Member> all();
 }

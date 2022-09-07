@@ -1,6 +1,7 @@
 package com.kh.myapp3.domain.svc;
 
 import com.kh.myapp3.domain.Member;
+import com.kh.myapp3.domain.admin.AdminMemberSVC;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
@@ -15,6 +16,8 @@ import java.util.List;
 class MemberSVCImplTest {
     @Autowired
     private MemberSVC memberSVC;
+    @Autowired
+    private AdminMemberSVC adminMemberSVC;
     private static Member member;
 
     @Test
@@ -71,8 +74,8 @@ class MemberSVCImplTest {
     @DisplayName("목록")
     @Order(4)
     void all() {
-        List<Member> list = memberSVC.all();
-        Member findedMember = memberSVC.findById(member.getMemberId());
+        List<Member> list = adminMemberSVC.all();
+        Member findedMember = adminMemberSVC.findById(member.getMemberId());
         Assertions.assertThat(list).containsAnyOf(findedMember);
     }
 }

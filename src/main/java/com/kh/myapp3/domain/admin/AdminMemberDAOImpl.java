@@ -1,4 +1,4 @@
-package com.kh.myapp3.domain.dao;
+package com.kh.myapp3.domain.admin;
 
 import com.kh.myapp3.domain.Member;
 import lombok.RequiredArgsConstructor;
@@ -6,20 +6,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.List;
 
 @Slf4j
 @Repository
 @RequiredArgsConstructor
-public class MemberDAOImpl implements MemberDAO {
+public class AdminMemberDAOImpl implements AdminMemberDAO{
     private final JdbcTemplate jt;
 
     //신규 회원 번호 생성
@@ -80,27 +74,29 @@ public class MemberDAOImpl implements MemberDAO {
         int result = 0;
         StringBuffer sql = new StringBuffer();
         sql.append("update member ");
-        sql.append("set nickname=?, udate = systimestamp ");
+        sql.append("set nickname=?, pw = ?, udate = systimestamp ");
         sql.append("where member_id = ? ");
-        sql.append("    pw = ? ");
 
-        result = jt.update(sql.toString(), member.getNickname(), memberId, member.getPw());
+        result = jt.update(sql.toString(), member.getNickname(), member.getPw(), memberId);
         return result;
     }
 
 
-    /**
-     * 탈퇴
-     * @param memberId 아이디
-     * @param pw       비밀번호
-     * @return
-     */
+    //탈퇴
     @Override
-    public int del(Long memberId, String pw) {
+    public int del(Long memberId) {
         int result = 0;
-        String sql = "delete from member where member_id=? and pw= ? ";
+        String sql = "delete from member where member_id=? ";
 
-        result = jt.update(sql, memberId, pw);
+        result = jt.update(sql, memberId);
         return result;
+    }
+
+    @Override
+    public List<Member> all() {
+        String sql = "select member_id, email, pw, nickname, cdate, udate from member ";
+
+        List<Member> list = jt.query(sql, new BeanPropertyRowMapper<>(Member.class));
+        return list;
     }
 }

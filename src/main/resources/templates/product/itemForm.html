@@ -26,21 +26,21 @@
     </div>
 
     <script>
-        (()=>{      <!-- IIFE  -->
+        (()=>{      //<!-- IIFE  -->
             const pid = document.querySelector('input[name=pid]').value;
 
-            <!-- 목록 -->
+            //<!-- 목록 -->
             listBtn.addEventListener('click', e=>{
                 location.href = '/products';
             });
 
-            <!-- 수정 -->
+            //<!-- 수정 -->
             editBtn.addEventListener('click', e=>{
                 const url = `/products/${pid}/edit`;
                 location.href = url;
             });
 
-            <!-- 삭제 -->
+            //<!-- 삭제 -->
             delBtn.addEventListener('click', e=>{
                 if(!confirm('삭제하시겠습니까?')) return;
 
