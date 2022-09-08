@@ -42,4 +42,11 @@ public interface AdminMemberDAO {
      * @return 회원전체
      */
     List<Member> all();
+
+    /**
+     * 이메일 중복 체크
+     * @param email 회원 이메일
+     * @return  존재시: true , false
+     */
+    Boolean dubChkOfMemberEmail(String email);
 }

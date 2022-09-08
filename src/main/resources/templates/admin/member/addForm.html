@@ -6,25 +6,85 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원 등록</title>
+    <style>
+        .errmsg {
+            fonst-size: 0.8em;
+            font-weight: bold;
+            color:red;
+        }
+        ul {
+            margin:0; padding: 0;
+        }
+        ul, li {
+            text-decoration: none;
+        }
+        .fieldError{
+            border:1px solid red;
+            color:red;
+        }
+        .fieldSucess{
+            border:1px solid green;
+            color:green;
+        }
+
+    </style>
 </head>
 <body>
-    <div class="member-wrap">
-        <h3>회원 등록</h3>
-        <hr>
-        <form action="" method="post" th:object="${addForm}">      <!-- method가 비어있으면 기본 get-->
-            <div>
-                <div><label for="">이메일</label><input type="email" th:field="*{email}"></div>
-                <div><label for="">비밀번호</label><input type="password" th:field="*{pw}"></div>
-                <div><label for="">닉네임</label><input type="text" th:field="*{nickname}"></div>
-                <div><button type="submit">등록</button><button type="reset" id="cancelBtn">취소</button></div>
-
-            </div>
-        </form>
+<!--        <h3>[[#{title.member.add}]]</h3>-->
+<h3 th:text="#{title.member.add}">회원등록</h3>
+<hr>
+<form id="form" action="" method="post" th:object="${form}">
+    <div th:if="${#fields.hasGlobalErrors()}">
+        <p class="errmsg" th:each="err:${#fields.globalErrors()}" th:text="${err}"></p>
     </div>
-<script>
-    cancelBtn.addEventListener('click', e=>{
-            location.href = '/admin/members';
-    });
+    <div>
+        <div>
+            <label for="" th:text="#{label.member.email}">이메일</label>
+            <input type="text" name="email" th:field="*{email}" th:class="${#fields.hasErrors('email')}? fieldError">
+            <span class="errmsg"></span>
+            <!--            <div>-->
+            <!--                <span th:errorclass="errmsg" th:errors="*{email}"></span>-->
+            <!--            </div>-->
+            <ul th:if="${#fields.hasErrors('email')}" th:class="errmsg">
+                <li th:each="err: ${#fields.errors('email')}" th:text="|${errStat.count}.${err}|"></li>
+            </ul>
+        </div>
+        <div>
+            <label for="" th:text="#{label.member.pw}">비밀번호</label>
+            <input type="text" name="pw" th:field="*{pw}">
+<!--            <span th:errorclass="errmsg" th:errors="*{pw}"></span>-->
+            <ul th:if="${#fields.hasErrors('pw')}" th:class="errmsg">
+                <li th:each="err: ${#fields.errors('pw')}" th:text="${err}"></li>
+            </ul>
+        </div>
+        <div>
+            <label for="" th:text="#{label.member.nickname}">닉네임</label>
+            <input type="text" name="nickname" th:field="*{nickname}">
+<!--            <span th:errorclass="errmsg" th:errors="*{nickname}"></span>-->
+        </div>
+        <!--            <span th:errorclass="errmsg" th:errors="*{pw}"></span>-->
+        <ul th:if="${#fields.hasErrors('nickname')}" th:class="errmsg">
+            <li th:each="err: ${#fields.errors('nickname')}" th:text="${err}"></li>
+        </ul>
+        <div>
+            <button type="submit" th:text="#{btn.add}" id="addBtn">등록</button>
+            <button type="reset" th:text="#{btn.cancel}">취소</button>
+            <button type="button" th:onclick="|location.href='@{/admin/members}'|" th:text="#{btn.list}">목록</button>
+        </div>
+    </div>
+</form>
+
+</script>
+<!--    addBtn.addEventListener('click', evt=>{-->
+<!--        evt.preventDefault();       //submit 미전송-->
+<!--        if(email.value.trim().length == 0){-->
+<!--            email.nextElementSibling.textContent = '이메일 입력은 필수입니다';-->
+<!--            email.focus();-->
+
+<!--            return;-->
+<!--        }-->
+<!--        form.submit();  //요청메시지 생성-->
+
 </script>
 </body>
 </html>

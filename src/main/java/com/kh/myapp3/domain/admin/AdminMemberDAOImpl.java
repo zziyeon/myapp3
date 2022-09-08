@@ -13,7 +13,7 @@ import java.util.List;
 @Slf4j
 @Repository
 @RequiredArgsConstructor
-public class AdminMemberDAOImpl implements AdminMemberDAO{
+public class AdminMemberDAOImpl implements AdminMemberDAO {
     private final JdbcTemplate jt;
 
     //신규 회원 번호 생성
@@ -30,7 +30,7 @@ public class AdminMemberDAOImpl implements AdminMemberDAO{
      * @return 회원
      */
     @Override
-    public int insert(Member member){
+    public int insert(Member member) {
         int result = 0;
         StringBuffer sql = new StringBuffer();
         sql.append("INSERT INTO MEMBER (member_id, email, pw, nickname) ");
@@ -65,8 +65,9 @@ public class AdminMemberDAOImpl implements AdminMemberDAO{
 
     /**
      * 수정
+     *
      * @param memberId 회원아이디
-     * @param member 수정정보     *
+     * @param member   수정정보     *
      * @return
      */
     @Override
@@ -98,5 +99,13 @@ public class AdminMemberDAOImpl implements AdminMemberDAO{
 
         List<Member> list = jt.query(sql, new BeanPropertyRowMapper<>(Member.class));
         return list;
+    }
+
+    @Override
+    public Boolean dubChkOfMemberEmail(String email) {
+        String sql = "select count(email) from member where email=? ";
+
+        Integer rowCount = jt.queryForObject(sql, Integer.class, email);
+        return rowCount == 1 ? true : false;
     }
 }

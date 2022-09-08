@@ -46,4 +46,9 @@ public class AdminMemberSVCImpl implements AdminMemberSVC {
     public List<Member> all() {
         return adminMemberDAO.all();
     }
+
+    @Override
+    public Boolean dubChkOfMemberEmail(String email) {
+        return adminMemberDAO.dubChkOfMemberEmail(email);
+    }
 }

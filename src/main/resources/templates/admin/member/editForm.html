@@ -11,13 +11,13 @@
 <div class="member-wrap">
     <h3>회원 수정</h3>
     <hr>
-    <form action="" method="post">
+    <form action="" method="post" th:object="${form}">
         <div>
-            <div><label for="">회원번호</label><input type="text" name="memberId" th:value="${editForm.memberId}" readonly>
+            <div><label for="">회원번호</label><input type="text" th:field="*{memberId}" readonly>
             </div>
-            <div><label for="">이메일</label><input type="email" name="email" th:value="${editForm.email}" readonly></div>
-            <div><label for="">비밀번호</label><input type="password" name="pw" th:value="${editForm.pw}"></div>
-            <div><label for="">닉네임</label><input type="text" name="nickname" th:value="${editForm.nickname}"></div>
+            <div><label for="">이메일</label><input type="email" th:field="*{email}" readonly></div>
+            <div><label for="">비밀번호</label><input type="password" th:field="*{pw}"></div>
+            <div><label for="">닉네임</label><input type="text"  th:field="*{nickname}"></div>
             <div>
                 <button type="submit">수정</button>
                 <button type="button" id="cancelBtn">취소</button>
@@ -28,7 +28,7 @@
 <script th:inline="javascript">
     cancelBtn.addEventListener('click', e=>{
         console.log('취소');
-        location.href=[[@{|/admin/members/${editForm.memberId}|}]];
+        location.href=[[@{|/admin/members/${form.memberId}|}]];
         });
 </script>
 </body>
