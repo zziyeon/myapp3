@@ -24,7 +24,8 @@ public class AdminMemberController {
     @GetMapping("/add")
     public String addForm(Model model) {
         model.addAttribute("addForm", new AddForm());
-        return "admin/member/addForm";        //회원 등록 view
+
+        return "admin/member/addForm_old";        //회원 등록 view
     }
 
     //회원 등록 처리 (POST) /members/add
@@ -33,8 +34,8 @@ public class AdminMemberController {
         //검증
         //model.addAttribute("addForm", addForm);
         log.info("addForm:{}",addForm);
-        if(addForm.getEmail().trim().length()==0){
-            return "admin/member/addForm";
+        if(addForm.getEmail() ==null || addForm.getEmail().trim().length()==0){
+            return "admin/member/addForm_old";
         }
 
         Member member = new Member();
