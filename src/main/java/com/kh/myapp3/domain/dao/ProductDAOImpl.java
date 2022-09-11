@@ -54,12 +54,21 @@ public class ProductDAOImpl implements ProductDAO {
 //        return product;
 //    }
 
-//    //등록  방법2
+
+    //상품 아이디 생성
+    @Override
+    public Long generatePid() {
+        String sql = "select product_product_id_seq.nextval from dual ";
+        Long newProductId = jt.queryForObject(sql, Long.class);
+        return newProductId;
+    }
+    //등록  방법2
     @Override
     public Product save(Product product) {
         StringBuffer sql = new StringBuffer();
         sql.append("insert into product values(product_product_id_seq.nextval, ?, ?,?)");
 
+        //JDBCTemplate은 자동으로 생성된 키 값을 구할 수 있는 방법을 제공
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jt.update(new PreparedStatementCreator(){
             @Override
@@ -151,15 +160,6 @@ public class ProductDAOImpl implements ProductDAO {
         String sql = "delete from product";
         int rows = jt.update(sql);
         log.info("삭제 건수: {}", rows);
-    }
-
-    //상품 아이디 생성
-    @Override
-    public Long generatePid() {
-        String sql = "select product_product_id_seq.nextval from dual ";
-        Long newProductId = jt.queryForObject(sql, Long.class);
-        return newProductId;
-
     }
 
     //등록    방법3) 화살표 함수 사용
