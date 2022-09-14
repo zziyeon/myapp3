@@ -39,9 +39,9 @@
     </div>
     <div>
         <div>
-            <label for="" th:text="#{label.member.email}">이메일</label>
+            <label for="email" th:text="#{label.member.email}">이메일</label>
             <input type="text" name="email" th:field="*{email}" th:class="${#fields.hasErrors('email')}? fieldError">
-            <span class="errmsg"></span>
+<!--            <span class="errmsg"></span>-->
             <!--            <div>-->
             <!--                <span th:errorclass="errmsg" th:errors="*{email}"></span>-->
             <!--            </div>-->
@@ -50,7 +50,7 @@
             </ul>
         </div>
         <div>
-            <label for="" th:text="#{label.member.pw}">비밀번호</label>
+            <label for="pw" th:text="#{label.member.pw}">비밀번호</label>
             <input type="text" name="pw" th:field="*{pw}">
 <!--            <span th:errorclass="errmsg" th:errors="*{pw}"></span>-->
             <ul th:if="${#fields.hasErrors('pw')}" th:class="errmsg">
@@ -58,7 +58,7 @@
             </ul>
         </div>
         <div>
-            <label for="" th:text="#{label.member.nickname}">닉네임</label>
+            <label for="nickname" th:text="#{label.member.nickname}">닉네임</label>
             <input type="text" name="nickname" th:field="*{nickname}">
 <!--            <span th:errorclass="errmsg" th:errors="*{nickname}"></span>-->
         </div>

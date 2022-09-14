@@ -7,6 +7,8 @@ import com.kh.myapp3.web.admin.form.member.EditForm;
 import com.kh.myapp3.web.admin.form.member.MemberInfoForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -35,6 +38,8 @@ public class AdminMemberController {
     @PostMapping("/add")
     public String add(@Valid @ModelAttribute("form") AddForm addForm, BindingResult bindingResult,
                       RedirectAttributes redirectAttributes) {  //리다이렉트할때 정보를 유지하기 위해 사용
+
+        //model.addAttribute("addForm",addForm);   =>@ModelAttribute를 해주면 이걸 안 적어도됨
         log.info("addForm:{}",addForm);
 
         //검증
@@ -77,7 +82,7 @@ public class AdminMemberController {
             return "admin/member/addForm_old";
         }
 
-        //비즈니스 규칙
+        //비즈니스 규칙( 필드검증)
         //1) 이메일에 @가 없으면 오류
         if(!addForm.getEmail().contains("@")){
             bindingResult.rejectValue("email", "emailChk1","이메일 형식에 맞지 않습니다.");
@@ -148,7 +153,7 @@ public class AdminMemberController {
         editForm.setPw(findedMember.getPw());
         editForm.setNickname(findedMember.getNickname());
 
-        model.addAttribute("editForm", editForm);
+        model.addAttribute("form", editForm);
 
         return "admin/member/editForm";
     }
@@ -156,6 +161,7 @@ public class AdminMemberController {
     //수정 처리
     @PostMapping("/{id}/edit")
     public String edit(@PathVariable("id") Long id, @Valid @ModelAttribute("form") EditForm editForm, BindingResult bindingResult) {
+        //검증
         if(bindingResult.hasErrors()){
             log.info("errors={}", bindingResult);
             return "admin/member/editForm";
@@ -187,9 +193,22 @@ public class AdminMemberController {
     public String all(Model model) {
         log.info("Model:{}", model);
 
-        List<Member> list = adminMemberSVC.all();
-        model.addAttribute("list", list);
+        List<Member> members = adminMemberSVC.all();
+        List<MemberInfoForm> list = new ArrayList<>();
+        //case1) 향상된 for문
+//        for (Member member : members) {
+//            MemberInfoForm memberInfoForm = new MemberInfoForm();
+//            BeanUtils.copyProperties(member,memberInfoForm);        //이름과 타입이 같으면 set,get 안해줄수 있음
+//            list.add(memberInfoForm);
+//        }
+        //case2) 고차함수 적용->람다표현식
+        members.stream().forEach(member->{
+            MemberInfoForm memberInfoForm = new MemberInfoForm();
+            BeanUtils.copyProperties(member,memberInfoForm);
+            list.add(memberInfoForm);
+        });
 
+        model.addAttribute("list", list);
         return "admin/member/all";               //전체 목록 view
     }
 }

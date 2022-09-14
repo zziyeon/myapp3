@@ -4,6 +4,7 @@ import com.kh.myapp3.domain.Member;
 import com.kh.myapp3.domain.dao.MemberDAO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
