@@ -1,6 +1,6 @@
 package com.kh.myapp3.web.admin;
 
-import com.kh.myapp3.domain.Member;
+import com.kh.myapp3.domain.dao.Member;
 import com.kh.myapp3.domain.admin.AdminMemberSVC;
 import com.kh.myapp3.web.admin.form.member.AddForm;
 import com.kh.myapp3.web.admin.form.member.EditForm;
@@ -8,7 +8,6 @@ import com.kh.myapp3.web.admin.form.member.MemberInfoForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
