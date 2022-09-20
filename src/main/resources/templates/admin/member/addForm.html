@@ -40,7 +40,7 @@
     <div>
         <div>
             <label for="email" th:text="#{label.member.email}">이메일</label>
-            <input type="text" name="email" th:field="*{email}" th:class="${#fields.hasErrors('email')}? fieldError">
+            <input type="text"th:field="*{email1}" th:class="${#fields.hasErrors('email')}? fieldError">
 <!--            <span class="errmsg"></span>-->
             <!--            <div>-->
             <!--                <span th:errorclass="errmsg" th:errors="*{email}"></span>-->

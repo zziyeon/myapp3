@@ -5,15 +5,13 @@ import com.kh.myapp3.domain.dao.MemberDAO;
 import com.kh.myapp3.domain.svc.MemberSVC;
 import com.kh.myapp3.web.form.LoginForm;
 import com.kh.myapp3.web.session.LoginMember;
+import com.kh.myapp3.web.session.LoginOkConst;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,8 +45,9 @@ public class HomeController{
     @PostMapping("/login")
     public String login(@Valid @ModelAttribute("form") LoginForm loginForm,
                         BindingResult bindingResult,
-                        HttpServletRequest request){    //세션 연결
-        
+                        HttpServletRequest request,
+                        @RequestParam(value="requestURI", required= false, defaultValue = "/") String requestURI){    //세션 연결
+
         //기본 검증
         if (bindingResult.hasErrors()) {
             log.info("bindingResult={}",bindingResult);
@@ -69,12 +68,16 @@ public class HomeController{
         LoginMember loginMember = new LoginMember(findedMember.getEmail(), findedMember.getNickname());
         //request.getSession(true): 세션정보가 있으면 가져오고 없으면 세션을 만듬
         HttpSession session = request.getSession(true);
-        session.setAttribute("LoginMember", loginMember);
+        session.setAttribute(LoginOkConst.LOGIN_MEMBER, loginMember);
 
-        return "afterLogin";
+        if (requestURI.equals("/")) {
+            return "afterLogin";
+        }
+
+        return "redirect:" +requestURI;
     }
     //로그아웃
-    @GetMapping("logout")
+    @GetMapping("/logout")
     public String logout(HttpServletRequest request) {
         //request.getSession(false): 세션정보가 있으면 가져오고 없으면 세션을 만들지 않음
         HttpSession session = request.getSession(false);

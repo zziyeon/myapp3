@@ -14,6 +14,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -189,8 +191,17 @@ public class AdminMemberController {
 
     // 목록 화면
     @GetMapping("")
-    public String all(Model model) {
+    public String all(Model model, HttpServletRequest request) {
         log.info("Model:{}", model);
+//        //목록 호출시 회원인지 아닌지 체크
+//        //로그인 유무체크 => 세션정보를 통해 확인
+//        HttpSession session = request.getSession(false);//true를 하면 새로 세션을 생성하기 때문에 false
+//        if (session == null || session.getAttribute("LoginMember") == null) {
+//            return "redirect:/login";
+//        }
+
+
+        
 
         List<Member> members = adminMemberSVC.all();
         List<MemberInfoForm> list = new ArrayList<>();
