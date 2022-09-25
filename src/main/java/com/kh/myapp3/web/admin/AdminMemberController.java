@@ -200,9 +200,6 @@ public class AdminMemberController {
 //            return "redirect:/login";
 //        }
 
-
-        
-
         List<Member> members = adminMemberSVC.all();
         List<MemberInfoForm> list = new ArrayList<>();
         //case1) 향상된 for문
