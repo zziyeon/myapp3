@@ -37,7 +37,7 @@ public class AdminMemberDAOImpl implements AdminMemberDAO {
         sql.append("VALUES (?, ?, ?, ?) ");
 
 //        Long memberId = generateMemberId();
-        jt.update(sql.toString(), member.getMemberId(), member.getEmail(), member.getPw(), member.getNickname());
+        result = jt.update(sql.toString(), member.getMemberId(), member.getEmail(), member.getPw(), member.getNickname());
 
         return result;
     }

@@ -4,6 +4,8 @@ import com.kh.myapp3.domain.dao.Member;
 
 import java.util.List;
 
+//svc와 dao 사이에 뭘 주고 받을건지
+
 public interface AdminMemberDAO {
 
     /**
@@ -11,6 +13,7 @@ public interface AdminMemberDAO {
      * @param member 가입정보
      * @return 가입건수
      */
+    // 행의 수 반환
     int insert(Member member);
 
     /**
